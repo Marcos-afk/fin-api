@@ -35,6 +35,21 @@ app.post('/account', (req, res) => {
   return res.status(201).json({ message: 'Cliente cadastrado com sucesso!', customer });
 });
 
+app.post('/deposit', isExistAccountByCpf, (req, res) => {
+  const { customer } = req;
+  const { description, amount } = req.body;
+
+  const statementOperation = {
+    description,
+    amount,
+    createdAt: Date.now(),
+    type: 'credit',
+  };
+
+  customer.statement.push(statementOperation);
+  return res.status(200).json({ message: 'Deposito realizado com sucesso!', statementOperation });
+});
+
 const PORT = process.env.PORT;
 app.listen(PORT, () => {
   console.log(`Servidor rodando na url/porta: ${PORT}`);
