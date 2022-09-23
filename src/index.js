@@ -17,6 +17,15 @@ app.get('/statement', isExistAccountByCpf, (req, res) => {
   return res.status(200).json({ statement: customer.statement });
 });
 
+app.get('/statement/date', isExistAccountByCpf, (req, res) => {
+  const { customer } = req;
+  const { date } = req.query;
+
+  const dateFormat = new Date(date + ' 00:00');
+  const statements = customer.statement.filter(s => s.createdAt.toDateString() === new Date(dateFormat).toDateString());
+  return res.status(200).json({ statements });
+});
+
 app.post('/account', (req, res) => {
   const { name, cpf } = req.body;
 
@@ -43,7 +52,7 @@ app.post('/deposit', isExistAccountByCpf, (req, res) => {
   const statementOperation = {
     description,
     amount,
-    createdAt: Date.now(),
+    createdAt: new Date(),
     type: 'credit',
   };
 
@@ -62,7 +71,7 @@ app.post('/withdraw', isExistAccountByCpf, (req, res) => {
 
   const statementOperation = {
     amount,
-    createdAt: Date.now(),
+    createdAt: new Date(),
     type: 'debit',
   };
   customer.statement.push(statementOperation);
