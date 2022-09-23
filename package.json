@@ -1,0 +1,24 @@
+{
+  "name": "ignite-nodejs",
+  "version": "1.0.0",
+  "main": "src/index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.2",
+    "express": "^4.18.1"
+  },
+  "scripts": {
+    "dev": "nodemon --exec sucrase-node ./src/index.js",
+    "build": "sucrase ./src -d ./build --transforms imports",
+    "start": "node build/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.7.1",
+    "sucrase": "^3.27.0"
+  }
+}
