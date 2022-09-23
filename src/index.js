@@ -3,6 +3,7 @@ import cors from 'cors';
 import { config } from 'dotenv';
 import { customers } from './database';
 import { v4 } from 'uuid';
+import { isExistAccountByCpf } from './middlewares/isExistAccountByCpf';
 config();
 const app = express();
 
@@ -10,13 +11,8 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/statement/:cpf', (req, res) => {
-  const { cpf } = req.params;
-  const customer = customers.find(c => c.cpf === cpf);
-  if (!customer) {
-    return res.status(400).json({ message: 'Cliente não encontrado' });
-  }
-
+app.get('/statement', isExistAccountByCpf, (req, res) => {
+  const { customer } = req;
   return res.status(200).json({ statement: customer.statement });
 });
 
