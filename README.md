@@ -2,6 +2,34 @@
 
 Projeto de controle financeiro desenvolvido com o conteúdo estudado nas aulas do Chapter I da trilha de NodeJS do Bootcamp Ignite da Rocketseat
 
+## :hammer_and_wrench: Ferramentas
+
+- [cors](https://www.npmjs.com/package/cors)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [express](https://expressjs.com/pt-br/)
+- [uuid](https://www.npmjs.com/package/uuid)
+- [nodejs](https://nodejs.org/en/docs/)
+- [nodemon](https://www.npmjs.com/package/nodemon)
+- [sucrase](https://www.npmjs.com/package/sucrase)
+
+## :desktop_computer: Padronização de código
+
+- [Eslint](https://eslint.org/)
+- [Prettier](https://prettier.io/)
+- [EditorConfig](https://editorconfig.org/)
+
+## :rocket: Executando o projeto
+
+```bash
+// Instale as dependências
+
+yarn install
+
+// Concluindo a instalação rode
+
+yarn dev
+```
+
 ### :heavy_check_mark: Requisitos
 
 - [x] Deve ser possível criar uma conta
