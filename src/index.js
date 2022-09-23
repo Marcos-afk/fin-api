@@ -10,6 +10,16 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/statement/:cpf', (req, res) => {
+  const { cpf } = req.params;
+  const customer = customers.find(c => c.cpf === cpf);
+  if (!customer) {
+    return res.status(400).json({ message: 'Cliente não encontrado' });
+  }
+
+  return res.status(200).json({ statement: customer.statement });
+});
+
 app.post('/account', (req, res) => {
   const { name, cpf } = req.body;
 
