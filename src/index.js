@@ -12,6 +12,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/account', isExistAccountByCpf, (req, res) => {
+  const { customer } = req;
+  return res.status(200).json({ customer });
+});
+
 app.get('/statement', isExistAccountByCpf, (req, res) => {
   const { customer } = req;
   return res.status(200).json({ statement: customer.statement });
@@ -76,6 +81,15 @@ app.post('/withdraw', isExistAccountByCpf, (req, res) => {
   };
   customer.statement.push(statementOperation);
   return res.status(200).json({ message: 'Saque realizado com sucesso!', statementOperation });
+});
+
+app.put('/account', isExistAccountByCpf, (req, res) => {
+  const { name } = req.body;
+  const { customer } = req;
+
+  customer.name = name;
+
+  return res.status(201).json({ message: 'Dados do cliente atualizados com sucesso!', customer });
 });
 
 const PORT = process.env.PORT;
