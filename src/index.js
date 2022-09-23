@@ -4,6 +4,7 @@ import { config } from 'dotenv';
 import { customers } from './database';
 import { v4 } from 'uuid';
 import { isExistAccountByCpf } from './middlewares/isExistAccountByCpf';
+import { getBalance } from './utils/getBalance';
 config();
 const app = express();
 
@@ -48,6 +49,24 @@ app.post('/deposit', isExistAccountByCpf, (req, res) => {
 
   customer.statement.push(statementOperation);
   return res.status(200).json({ message: 'Deposito realizado com sucesso!', statementOperation });
+});
+
+app.post('/withdraw', isExistAccountByCpf, (req, res) => {
+  const { customer } = req;
+  const { amount } = req.body;
+
+  const balance = getBalance(customer.statement);
+  if (balance < amount) {
+    return res.status(400).json({ message: 'Não é possivel fazer essa operação, saldo insuficiente' });
+  }
+
+  const statementOperation = {
+    amount,
+    createdAt: Date.now(),
+    type: 'debit',
+  };
+  customer.statement.push(statementOperation);
+  return res.status(200).json({ message: 'Saque realizado com sucesso!', statementOperation });
 });
 
 const PORT = process.env.PORT;
