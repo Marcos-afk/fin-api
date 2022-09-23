@@ -17,6 +17,13 @@ app.get('/account', isExistAccountByCpf, (req, res) => {
   return res.status(200).json({ customer });
 });
 
+app.get('/account/balance', isExistAccountByCpf, (req, res) => {
+  const { customer } = req;
+
+  const balance = getBalance(customer.statement);
+  return res.status(200).json({ balance });
+});
+
 app.get('/statement', isExistAccountByCpf, (req, res) => {
   const { customer } = req;
   return res.status(200).json({ statement: customer.statement });
@@ -71,7 +78,7 @@ app.post('/withdraw', isExistAccountByCpf, (req, res) => {
 
   const balance = getBalance(customer.statement);
   if (balance < amount) {
-    return res.status(400).json({ message: 'Não é possivel fazer essa operação, saldo insuficiente' });
+    return res.status(400).json({ message: 'Não é possível fazer essa operação, saldo insuficiente' });
   }
 
   const statementOperation = {
@@ -90,6 +97,18 @@ app.put('/account', isExistAccountByCpf, (req, res) => {
   customer.name = name;
 
   return res.status(201).json({ message: 'Dados do cliente atualizados com sucesso!', customer });
+});
+
+app.delete('/account', isExistAccountByCpf, (req, res) => {
+  const { customer } = req;
+
+  const customerIndex = customers.findIndex(c => c.id === customer.id);
+  if (customerIndex === -1) {
+    return res.status(400).json({ message: 'Índice não encontrado' });
+  }
+
+  customers.splice(customerIndex, 1);
+  return res.status(201).json({ message: 'Dados do cliente apagados com sucesso!', customers });
 });
 
 const PORT = process.env.PORT;
