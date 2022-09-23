@@ -2,7 +2,7 @@
 
 Projeto de controle financeiro desenvolvido com o conteúdo estudado nas aulas do Chapter I da trilha de NodeJS do Bootcamp Ignite da Rocketseat
 
-### Requisitos
+### :heavy_check_mark: Requisitos
 
 - [] Deve ser possível criar umma conta
 - [] Deve ser possível buscar o extrato bancário do cliente
